@@ -1,4 +1,4 @@
-import { Messages } from "./messages";
+import { MESSAGES } from "./messages";
 
 interface GameInterface {
     userMove:any,
@@ -32,13 +32,9 @@ export class Game implements GameInterface {
         (this.userMove == symbols.PAPEL && this.botMove == symbols.PIEDRA) ||
         (this.userMove == symbols.TIJERA && this.botMove == symbols.PAPEL)
         
-        if(question) { this.addPoints(this.userPoints) ; return Messages.win } // Victoria
-        else if (this.userMove == this.botMove) return Messages.equal // Empate
-        else { this.addPoints(this.botPoints) ; return Messages.lose } // Derrota
-    }
-
-    addPoints(mark:number){
-        mark++
+        if(question) { this.userPoints +=1 ; return MESSAGES.win } // Victoria, jugador suma punto
+        else if (this.userMove == this.botMove) return MESSAGES.equal // Empate
+        else { this.botPoints +=1 ; return MESSAGES.lose } // Derrota, bot suma punto
     }
 
     startGame(){

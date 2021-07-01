@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"tsc --build & node dest/main.js",
+    "start": "tsc --build & node dest/main.js",
     "test": "node dest/main.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^15.12.5"
+    "@types/node": "^15.12.5",
+    "emoji-regex": "^9.2.2",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/readline-sync": "^1.4.3"
   }
 }

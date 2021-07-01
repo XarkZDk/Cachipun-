@@ -1,53 +1,66 @@
-import { Messages } from "./messages"
-import { interf } from "../main"
+import { MESSAGES } from "./messages"
 import { Game } from "./class"
+import * as readlineSync from "readline-sync"
 
-export function mainScreen (){
-    //Pantalla menú
-    Messages.clear()
-
-    interf.question(Messages.menu,(res:string)=>{
-        res = res.trim()
-        if(res == '1') PLAY() //Empezar a jugar
-        else if(res == '2') interf.close() //Mostrar reglas
-        else if (res == '3') { interf.close();console.log(Messages.gameover) } //Salir 
-        else mainScreen() //Evitar errores
-    })
+export function mainScreen (){ //Pantalla menú
+    while(true){
+        MESSAGES.clear()
+        let res = readlineSync.questionInt(MESSAGES.menu)
+        if(res == 1) play() //Empezar a jugar
+        else if(res == 2) rules() //Mostrar reglas
+        else if (res == 3) { //Salir
+            console.log(MESSAGES.gameover)
+            break
+        } 
+    }
 }
 
-function PLAY(){
-    let GAME = new Game(0,0,0,0,true)
-    Messages.clear()
-    console.log(Messages.gamestart)
-    GAME.startGame()
+function play(){
+    let game = new Game(0,0,0,0,true)
+    MESSAGES.clear()
+    console.log(MESSAGES.gamestart)
+    game.startGame()
 
-    while(GAME.running == true){
-        interf.question(Messages.select,(res:any,)=>{
-            res = parseInt(res.trim())
+    while(game.running){
+        let res = readlineSync.questionInt(MESSAGES.select)
             
-            if(isNaN(res)|| res < 1 || res > 3){
-                console.log(Messages.error)
-                interf.close()
-            }else{
-                GAME.userMove = res
-                GAME.botMove = randomGenerator()
-                
-                console.log(GAME.move(GAME.userMove))
-                console.log(GAME.move(GAME.botMove))
-                
-                console.log(GAME.getResult())
-                GAME.endGame
-            }
-        })
-        console.log("Estamos de vuelta!")
+        if(isNaN(res)|| res < 1 || res > 3) console.log(MESSAGES.error)
+        else{
+            game.userMove = res
+            game.botMove = randomGenerator()
+            
+            console.log(`\nEl jugador utilizo: ${game.move(game.userMove)}`)
+            console.log(`El bot utilizo: ${game.move(game.botMove)}`)
+            
+            console.log("\n",game.getResult())
+            
+            console.log(`User: ${game.userPoints}
+Bot: ${game.botPoints}`)
+        }
+        let continueP = readlineSync.question(MESSAGES.continue)
+        continueP.toLowerCase
+        console.log(continueP)
+        if(continueP != 'y') {
+            game.endGame()
+            MESSAGES.clear()
+        }else{
+            MESSAGES.clear()
+        }
+    }
+}
+
+function rules (){
+    while(true){
+        MESSAGES.clear()
+        console.log(MESSAGES.rules)
+        let exit = readlineSync.question(MESSAGES.continue_reading)
+        exit = exit.toLowerCase()
+        if(exit == 'y') break
     }
 }
 
 function randomGenerator ():number {
     let random = Math.floor(Math.random()*3)+1
     return random
-}
+}    
 
-function readCommands (){
-    //Leer comandos de salir continuar o algo asi
-} 
