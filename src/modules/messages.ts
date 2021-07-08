@@ -14,9 +14,11 @@ export const MESSAGES = {
                         Piedra Papel o Tijeras
                     ==============================
                      Elige una opcion:
+                     
                      1 Jugar
                      2 Reglas
-                     3 Salir\n
+                     3 Ver partidas anteriores
+                     4 Salir\n
 `,
     rules:`
                     ==============================
@@ -27,7 +29,8 @@ export const MESSAGES = {
                        Tijeras le gana a Papel
                        Papel le gana a Piedra\n
                     `,
-
+    saved:`PARTIDA GUARDADA`,
+    noFile:`No se han registrado partidas`,
 
     clear(){
         console.clear()
